@@ -1,0 +1,253 @@
+﻿<dcont:AsyncUserControl x:Class="WorkManager.Views.TasksView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dcont="clr-namespace:WPFTools.Windows.Controls;assembly=WPFTools.Presentation"
+                        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                        xmlns:enum="clr-namespace:WorkManager.Data.Enums;assembly=WorkManager.Data.Models"
+                        xmlns:models="clr-namespace:WPFTools.Models;assembly=WPFTools.Core"
+                        xmlns:h="clr-namespace:WPFTools.Helpers;assembly=WPFTools.Presentation"
+                        xmlns:conv="clr-namespace:WorkManager.Converters"
+                        xmlns:dconv="clr-namespace:WPFTools.Converters;assembly=WPFTools.Presentation"
+                        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                        xmlns:mEx="clr-namespace:WPFTools.MarkupExtensions;assembly=WPFTools.Presentation"
+                        mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+  <Grid>
+    <Grid.Resources>
+      <h:BindingProxy Data="{Binding}" x:Key="contextProxy"/>
+      <sys:Int32 x:Key="Zero">0</sys:Int32>
+    </Grid.Resources>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="auto"/>
+      <RowDefinition/>
+    </Grid.RowDefinitions>
+    <dcont:HeaderControl Header="{Binding}" Style="{StaticResource HeaderControlStyle1}">
+      <dcont:HeaderControl.HeaderTemplate>
+        <DataTemplate>
+          <Border BorderBrush="{DynamicResource MainBrush}" BorderThickness="0,0,0,3" Padding="3,3,0,1">
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+              </Grid.ColumnDefinitions>
+              <TextBlock Text="Wybierz projekt:" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,3,3" Foreground="{StaticResource MainBrush}"/>
+              <ComboBox Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch"
+							          DisplayMemberPath="Name" FontSize="14" FontWeight="Bold" Margin="0,0,0,3"
+                        ItemsSource="{Binding Projects}"
+                        SelectedValue="{Binding ProjectId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                        SelectedValuePath="Id"/>
+              <Button Grid.Column="2" Padding="10,4" Margin="3,0,3,3" Style="{StaticResource ButtonStyle2}" Command="{Binding AddTaskCommand}" IsEnabled="{mEx:BooleanModifyPermission TSK}">
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                  </Grid.ColumnDefinitions>
+                  <Path Height="16" Width="16" Data="M 0,0.5 L1,0.5 M0.5,0 L0.5,1" Stretch="Fill" Stroke="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, UpdateSourceTrigger=PropertyChanged}" StrokeThickness="2"/>
+                  <TextBlock Grid.Column="1" Text="NOWE ZADANIE" TextAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                </Grid>
+              </Button>
+            </Grid>
+          </Border>
+        </DataTemplate>
+      </dcont:HeaderControl.HeaderTemplate>
+    </dcont:HeaderControl>
+    <Grid Grid.Row="1" IsEnabled="{Binding ProjectId, UpdateSourceTrigger=PropertyChanged, Converter={dconv:IsNullConverter NullValue=False}}">
+      <Grid.Resources>
+        <ControlTemplate x:Key="TaskTemplate">
+          <Border>
+            <Border.Style>
+              <Style TargetType="{x:Type Border}">
+                <Setter Property="Background" Value="{StaticResource BackgroundBrush}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource AssistantBrush}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="Padding" Value="5"/>
+              </Style>
+            </Border.Style>
+            <Grid>
+              <Rectangle Fill="Transparent"/>
+              <Grid>
+                <Grid.RowDefinitions>
+                  <RowDefinition/>
+                  <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                  </Grid.ColumnDefinitions>
+                  <Button ToolTip="Edytuj dane zadania" Grid.Column="0" Padding="1" Width="18" Height="18" MinWidth="16" VerticalAlignment="Top" 
+                          IsEnabled="{mEx:BooleanModifyPermission TSK}"
+                          Command="{Binding Data.EditCommand, Source={StaticResource contextProxy}}" CommandParameter="{Binding}">
+                    <Button.Resources>
+                      <CornerRadius x:Key="ButtonStyle2.CornerRadius">1</CornerRadius>
+                    </Button.Resources>
+                    <Button.Style>
+                      <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonStyle2}">
+                        <Setter Property="Content">
+                          <Setter.Value>
+                            <Image Source="pack://application:,,,/Resources/Images/edit_32_2C3E50.png"/>
+                          </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                          <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Content">
+                              <Setter.Value>
+                                <Image Source="pack://application:,,,/Resources/Images/edit_32_FFFFFF.png"/>
+                              </Setter.Value>
+                            </Setter>
+                          </Trigger>
+                        </Style.Triggers>
+                      </Style>
+                    </Button.Style>
+                  </Button>
+                  <TextBlock Grid.Column="1" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" 
+                             FontWeight="Bold" FontSize="14" Foreground="{StaticResource MainBrush}" 
+                             TextAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Margin="3"/>
+                  <Button ToolTip="Usuń zadania" Grid.Column="4" Padding="1" Width="18" Height="18" MinWidth="16" VerticalAlignment="Top"
+                          Command="{Binding Data.RemoveCommand, Source={StaticResource contextProxy}}" CommandParameter="{Binding}"
+                          IsEnabled="{mEx:BooleanModifyPermission TSK}">
+                    <Button.Resources>
+                      <CornerRadius x:Key="ButtonStyle2.CornerRadius">1</CornerRadius>
+                    </Button.Resources>
+                    <Button.Style>
+                      <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonStyle2}">
+                        <Setter Property="Content">
+                          <Setter.Value>
+                            <Image Source="pack://application:,,,/Resources/Images/delete_32_2C3E50.png"/>
+                          </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                          <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Content">
+                              <Setter.Value>
+                                <Image Source="pack://application:,,,/Resources/Images/delete_32_FFFFFF.png"/>
+                              </Setter.Value>
+                            </Setter>
+                          </Trigger>
+                        </Style.Triggers>
+                      </Style>
+                    </Button.Style>
+                  </Button>
+                </Grid>
+                <Grid Grid.Row="1">
+                  <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                  </Grid.RowDefinitions>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                  </Grid.ColumnDefinitions>
+                  <Image Grid.Row="0" Source="pack://application:,,,/Resources/Images/date_from_32_B9CCE2.png" Width="18" Margin="1" VerticalAlignment="Center"/>
+                  <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding EstimateStart, UpdateSourceTrigger=PropertyChanged, StringFormat={StaticResource ShortDateFormat}, TargetNullValue=--}" 
+                             TextAlignment="Left" Margin="3,1" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                  <Image Grid.Row="1" Source="pack://application:,,,/Resources/Images/date_to_32_B9CCE2.png" Width="18" Margin="1" VerticalAlignment="Center"/>
+                  <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding EstimateEnd, UpdateSourceTrigger=PropertyChanged, StringFormat={StaticResource ShortDateFormat}, TargetNullValue=--}" 
+                             TextAlignment="Left" Margin="3,1" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+
+                  <Image Grid.Row="0" Grid.Column="3" Source="pack://application:,,,/Resources/Images/task_state_32_B9CCE2.png" Width="18" Margin="1" VerticalAlignment="Center"/>
+                  <ComboBox x:Name="PART_State" Grid.Row="0" Grid.Column="2" DisplayMemberPath="Name" Width="85" HorizontalAlignment="Right" Margin="1,3,1,1"
+                          ItemsSource="{Binding States, UpdateSourceTrigger=PropertyChanged}"
+                          SelectedValue="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" SelectedValuePath="Value">
+                    <ComboBox.IsEnabled>
+                      <MultiBinding Converter="{dconv:BooleanArrayToBooleanConverter}">
+                        <Binding Path="AccountId" UpdateSourceTrigger="PropertyChanged" Converter="{dconv:IsNullConverter NullValue=False}"/>
+                        <Binding Path="Result" Source="{mEx:BooleanModifyPermission TSK}"/>
+                      </MultiBinding>
+                    </ComboBox.IsEnabled>
+                    <i:Interaction.Triggers>
+                      <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding Path=Data.ChangeStateCommand, Source={StaticResource contextProxy}}"  >
+                          <i:InvokeCommandAction.CommandParameter>
+                            <MultiBinding Converter="{conv:ChangeTaskStateConverter}">
+                              <Binding Path="."/>
+                              <Binding ElementName="PART_State" Path="SelectedItem.Value"/>
+                            </MultiBinding>
+                          </i:InvokeCommandAction.CommandParameter>
+                        </i:InvokeCommandAction>
+                      </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                  </ComboBox>
+                  <Image Grid.Row="1" Grid.Column="3" Source="pack://application:,,,/Resources/Images/user_32_B9CCE2.png" Width="18" Margin="1" VerticalAlignment="Center"/>
+                  <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Account, UpdateSourceTrigger=PropertyChanged, TargetNullValue=--}" 
+                             TextAlignment="Right" Margin="3,1" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Border>
+        </ControlTemplate>
+        <Style TargetType="{x:Type ListView}">
+          <Setter Property="BorderThickness" Value="0"/>
+          <Setter Property="Background" Value="{StaticResource SubBackgroundBrush}"/>
+          <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        </Style>
+        <Style x:Key="TasksListStyle" TargetType="{x:Type dcont:HeaderControl}">
+          <Setter Property="Margin" Value="3"/>
+          <Setter Property="HeaderTemplate">
+            <Setter.Value>
+              <DataTemplate>
+                <Border BorderThickness="0,0,0,2" BorderBrush="{StaticResource AssistantBrush}">
+                  <TextBlock Text="{Binding}" FontSize="12" FontWeight="Bold" Foreground="{StaticResource HighlightBrush}" TextAlignment="Center" Padding="5"/>
+                </Border>
+              </DataTemplate>
+            </Setter.Value>
+          </Setter>
+        </Style>
+      </Grid.Resources>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition/>
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition/>
+        <ColumnDefinition/>
+        <ColumnDefinition/>
+        <ColumnDefinition/>
+      </Grid.ColumnDefinitions>
+      <dcont:HeaderControl Header="NOWE" Grid.Row="1" Grid.Column="0" Style="{StaticResource TasksListStyle}" >
+        <ListView ItemsSource="{Binding NewTasks, UpdateSourceTrigger=PropertyChanged}">
+          <ListView.ItemContainerStyle>
+            <Style TargetType="{x:Type ListViewItem}">
+              <Setter Property="Template" Value="{StaticResource TaskTemplate}"/>
+            </Style>
+          </ListView.ItemContainerStyle>
+        </ListView>
+      </dcont:HeaderControl>
+      <dcont:HeaderControl Header="AKTYWNE" Grid.Row="1" Grid.Column="1"  Style="{StaticResource TasksListStyle}">
+        <ListView ItemsSource="{Binding ActiveTasks, UpdateSourceTrigger=PropertyChanged}">
+          <ListView.ItemContainerStyle>
+            <Style TargetType="{x:Type ListViewItem}">
+              <Setter Property="Template" Value="{StaticResource TaskTemplate}"/>
+            </Style>
+          </ListView.ItemContainerStyle>
+        </ListView>
+      </dcont:HeaderControl>
+      <dcont:HeaderControl Header="WSTRZYMANE" Grid.Row="1" Grid.Column="2"  Style="{StaticResource TasksListStyle}">
+        <ListView ItemsSource="{Binding SuspendTasks, UpdateSourceTrigger=PropertyChanged}">
+          <ListView.ItemContainerStyle>
+            <Style TargetType="{x:Type ListViewItem}">
+              <Setter Property="Template" Value="{StaticResource TaskTemplate}"/>
+            </Style>
+          </ListView.ItemContainerStyle>
+        </ListView>
+      </dcont:HeaderControl>
+      <dcont:HeaderControl Header="ZAKOŃCZONE" Grid.Row="1" Grid.Column="3"  Style="{StaticResource TasksListStyle}">
+        <ListView ItemsSource="{Binding CompleteTasks, UpdateSourceTrigger=PropertyChanged}">
+          <ListView.ItemContainerStyle>
+            <Style TargetType="{x:Type ListViewItem}">
+              <Setter Property="Template" Value="{StaticResource TaskTemplate}"/>
+            </Style>
+          </ListView.ItemContainerStyle>
+        </ListView>
+      </dcont:HeaderControl>
+    </Grid>
+  </Grid>
+</dcont:AsyncUserControl>

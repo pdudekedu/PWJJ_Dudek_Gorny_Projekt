@@ -1,0 +1,19 @@
+﻿<dwin:ClientApplication xmlns:dwin="clr-namespace:WPFTools.Windows;assembly=WPFTools.Presentation" 
+                        x:Class="WorkManager.App"
+                        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                        xmlns:local="clr-namespace:WorkManager"
+                        StartupUri="Views/MainWindowView.xaml">
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/WPFTools.Presentation;component/Themes/MadisonTheme.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/WPFTools.Presentation;component/Themes/Generic.xaml"/>
+      </ResourceDictionary.MergedDictionaries>
+      <BitmapImage x:Key="AboutWindow.HeaderImage" UriSource="pack://application:,,,/Resources/Images/header_transp.png"/>
+      <BitmapImage x:Key="AboutWindow.ProgramIcon" UriSource="pack://application:,,,/Resources/Images/icon_64.png"/>
+      <BitmapImage x:Key="LoginWindow.HeaderImage" UriSource="pack://application:,,,/Resources/Images/header_transp.png"/>
+      <BitmapImage x:Key="LoginWindow.ProgramIcon" UriSource="pack://application:,,,/Resources/Images/icon_64.png"/>
+    </ResourceDictionary>
+  </Application.Resources>
+</dwin:ClientApplication>

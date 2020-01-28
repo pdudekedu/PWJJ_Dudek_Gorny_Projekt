@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://ServiceContracts.Server.WorkManager/" targetNamespace="http://ServiceContracts.Server.WorkManager/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema>
+      <xsd:import schemaLocation="http://localhost:9000/main?xsd=1" namespace="http://ServiceContracts.Server.WorkManager/" />
+    </xsd:schema>
+  </types>
+  <message name="Get">
+    <part name="parameters" element="tns:Get" />
+  </message>
+  <message name="GetResponse">
+    <part name="parameters" element="tns:GetResponse" />
+  </message>
+  <message name="InvocationTargetException">
+    <part name="fault" element="tns:InvocationTargetException" />
+  </message>
+  <message name="IllegalAccessException">
+    <part name="fault" element="tns:IllegalAccessException" />
+  </message>
+  <message name="Invoke">
+    <part name="parameters" element="tns:Invoke" />
+  </message>
+  <message name="InvokeResponse">
+    <part name="parameters" element="tns:InvokeResponse" />
+  </message>
+  <portType name="IMainService">
+    <operation name="Get">
+      <input xmlns:ns1="http://www.w3.org/2007/05/addressing/metadata" ns1:Action="http://ServiceContracts.Server.WorkManager/IMainService/GetRequest" message="tns:Get" />
+      <output xmlns:ns2="http://www.w3.org/2007/05/addressing/metadata" ns2:Action="http://ServiceContracts.Server.WorkManager/IMainService/GetResponse" message="tns:GetResponse" />
+      <fault xmlns:ns3="http://www.w3.org/2007/05/addressing/metadata" ns3:Action="http://ServiceContracts.Server.WorkManager/IMainService/Get/Fault/InvocationTargetException" name="InvocationTargetException" message="tns:InvocationTargetException" />
+      <fault xmlns:ns4="http://www.w3.org/2007/05/addressing/metadata" ns4:Action="http://ServiceContracts.Server.WorkManager/IMainService/Get/Fault/IllegalAccessException" name="IllegalAccessException" message="tns:IllegalAccessException" />
+    </operation>
+    <operation name="Invoke">
+      <input xmlns:ns5="http://www.w3.org/2007/05/addressing/metadata" ns5:Action="http://ServiceContracts.Server.WorkManager/IMainService/InvokeRequest" message="tns:Invoke" />
+      <output xmlns:ns6="http://www.w3.org/2007/05/addressing/metadata" ns6:Action="http://ServiceContracts.Server.WorkManager/IMainService/InvokeResponse" message="tns:InvokeResponse" />
+      <fault xmlns:ns7="http://www.w3.org/2007/05/addressing/metadata" ns7:Action="http://ServiceContracts.Server.WorkManager/IMainService/Invoke/Fault/InvocationTargetException" name="InvocationTargetException" message="tns:InvocationTargetException" />
+      <fault xmlns:ns8="http://www.w3.org/2007/05/addressing/metadata" ns8:Action="http://ServiceContracts.Server.WorkManager/IMainService/Invoke/Fault/IllegalAccessException" name="IllegalAccessException" message="tns:IllegalAccessException" />
+    </operation>
+  </portType>
+</definitions>

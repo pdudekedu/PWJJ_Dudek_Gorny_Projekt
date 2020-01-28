@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CAEB185D-CD57-4403-844A-4B2C00F382E6}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>WorkManager</RootNamespace>
+    <AssemblyName>WorkManager</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon_96.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FontAwesome.WPF, Version=4.7.0.37774, Culture=neutral, PublicKeyToken=0758b07a11a4f466, processorArchitecture=MSIL">
+      <HintPath>..\packages\FontAwesome.WPF.4.7.0.9\lib\net40\FontAwesome.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Expression.Blend.Sdk.1.0.2\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WPFTools.Core">
+      <HintPath>..\..\WPFTools\DCLibrary.Presentation\bin\Debug\WPFTools.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="WPFTools.Presentation">
+      <HintPath>..\..\WPFTools\DCLibrary.Presentation\bin\Debug\WPFTools.Presentation.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Converters\ChangeTaskStateConverter.cs" />
+    <Compile Include="Converters\HistoryModificationTypeToDisplayNameConverter.cs" />
+    <Compile Include="Converters\TaskStateToBrushConverter.cs" />
+    <Compile Include="Converters\TaskStateToStringConverter.cs" />
+    <Compile Include="Models\UserType.cs" />
+    <Compile Include="ViewModels\ReviewViewModel.cs" />
+    <Compile Include="ViewModels\WorktimeViewModel.cs" />
+    <Compile Include="ViewModels\NewTaskWindowViewModel.cs" />
+    <Compile Include="ViewModels\WorkflowViewModel.cs" />
+    <Compile Include="Views\WorkflowView.xaml.cs">
+      <DependentUpon>WorkflowView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WorktimeView.xaml.cs">
+      <DependentUpon>WorktimeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HistoryView.xaml.cs">
+      <DependentUpon>HistoryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProjectsView.xaml.cs">
+      <DependentUpon>ProjectsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ResourcesView.xaml.cs">
+      <DependentUpon>ResourcesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TasksView.xaml.cs">
+      <DependentUpon>TasksView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TeamsView.xaml.cs">
+      <DependentUpon>TeamsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UsersView.xaml.cs">
+      <DependentUpon>UsersView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NewTaskWindowView.xaml.cs">
+      <DependentUpon>NewTaskWindowView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\WorkflowView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\WorktimeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MainWindowView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\MenuItem.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\MetadataViewModel.cs" />
+    <Compile Include="ViewModels\ResourcesViewModel.cs" />
+    <Compile Include="ViewModels\ProjectsViewModel.cs" />
+    <Compile Include="ViewModels\HistoryViewModel.cs" />
+    <Compile Include="ViewModels\TeamsViewModel.cs" />
+    <Compile Include="ViewModels\TasksViewModel.cs" />
+    <Compile Include="ViewModels\UsersViewModel.cs" />
+    <Compile Include="Views\MainWindowView.xaml.cs">
+      <DependentUpon>MainWindowView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Views\HistoryView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ProjectsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ResourcesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TasksView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TeamsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UsersView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NewTaskWindowView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\icon_32.png" />
+    <Resource Include="Resources\Images\icon_64.png" />
+    <Resource Include="Resources\Images\icon_96.ico" />
+    <Resource Include="Resources\Images\icon_96.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WorkManager.Client\WorkManager.Client.csproj">
+      <Project>{9ed939b8-3b79-48c5-ba61-e28a0775421e}</Project>
+      <Name>WorkManager.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WorkManager.Data.Models\WorkManager.Data.Models.csproj">
+      <Project>{abfbb641-93f9-41ab-8a04-5ab27f185852}</Project>
+      <Name>WorkManager.Data.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon_96.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\header_transp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\task_32_2C3E50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\task_32_FFFFFF.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\resource_32_FFFFFF.png" />
+    <Resource Include="Resources\Images\resource_32_2C3E50.png" />
+    <Resource Include="Resources\Images\history_32_FFFFFF.png" />
+    <Resource Include="Resources\Images\history_32_2C3E50.png" />
+    <Resource Include="Resources\Images\team_32_FFFFFF.png" />
+    <Resource Include="Resources\Images\team_32_2C3E50.png" />
+    <Resource Include="Resources\Images\project_32_FFFFFF.png" />
+    <Resource Include="Resources\Images\project_32_2C3E50.png" />
+    <Resource Include="Resources\Images\users_32_FFFFFF.png" />
+    <Resource Include="Resources\Images\users_32_2C3E50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Behaviours\" />
+    <Folder Include="Enums\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\edit_32_2C3E50.png" />
+    <Resource Include="Resources\Images\edit_32_FFFFFF.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\delete_32_2C3E50.png" />
+    <Resource Include="Resources\Images\delete_32_FFFFFF.png" />
+    <Resource Include="Resources\Images\restore_32_2C3E50.png" />
+    <Resource Include="Resources\Images\restore_32_FFFFFF.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\worktime_32_FFFFFF.png" />
+    <Resource Include="Resources\Images\worktime_32_2C3E50.png" />
+    <Resource Include="Resources\Images\workflow_32_2C3E50.png" />
+    <Resource Include="Resources\Images\workflow_32_FFFFFF.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\task_active_32_B9CCE2.png" />
+    <Resource Include="Resources\Images\date_from_32_B9CCE2.png" />
+    <Resource Include="Resources\Images\date_to_32_B9CCE2.png" />
+    <Resource Include="Resources\Images\task_closed_32_B9CCE2.png" />
+    <Resource Include="Resources\Images\task_holded_32_B9CCE2.png" />
+    <Resource Include="Resources\Images\task_new_32_B9CCE2.png" />
+    <Resource Include="Resources\Images\user_32_B9CCE2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\task_state_32_B9CCE2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

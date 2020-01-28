@@ -1,0 +1,80 @@
+﻿<dcont:AsyncUserControl x:Class="WorkManager.Views.HistoryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dcont="clr-namespace:WPFTools.Windows.Controls;assembly=WPFTools.Presentation"
+             xmlns:help="clr-namespace:WPFTools.Helpers;assembly=WPFTools.Presentation"
+             xmlns:di="clr-namespace:WPFTools.Inputs;assembly=WPFTools.Presentation"
+             xmlns:cv="clr-namespace:WorkManager.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="auto"/>
+    </Grid.RowDefinitions>
+    <dcont:AsyncContentControl TaskDescriptor="{Binding ItemsLoading}">
+      <dcont:FilteringDataGrid x:Name="HistoryGrid" 
+                               CanUserAddRows="False"
+                              CanUserDeleteRows="False"
+                              CanUserReorderColumns="True"
+                              CanUserResizeColumns="True"
+                              ExpandedFilter="False"
+                              CanUserResizeRows="False"
+                              CanUserSortColumns="True"
+                              HeadersVisibility="Column"
+                              IsReadOnly="True"
+                              SelectionUnit="FullRow"
+                              AutoGenerateColumns="False"
+                               EnableRowVirtualization="True" EnableColumnVirtualization="True" VirtualizingPanel.IsVirtualizing="True"
+                             ItemsSource="{Binding Items, UpdateSourceTrigger=PropertyChanged}">
+        <dcont:FilteringDataGrid.Resources>
+          <help:BindingProxy x:Key="ProxyGrid" Data="{Binding ElementName=HistoryGrid}"/>
+        </dcont:FilteringDataGrid.Resources>
+        <DataGrid.InputBindings>
+          <di:DataGridCopyKeyBinding/>
+          <di:DataGridCopyWithHeadersKeyBinding/>
+        </DataGrid.InputBindings>
+        <DataGrid.RowStyle>
+          <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource DataGridRowStyle}">
+            <Setter Property="ContextMenu">
+              <Setter.Value>
+                <ContextMenu DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
+                  <dcont:DataGridCopyMenuItem AssociatedDataGrid="{Binding Data, Source={StaticResource ProxyGrid}}"/>
+                  <dcont:DataGridCopyWithHeadersMenuItem AssociatedDataGrid="{Binding Data, Source={StaticResource ProxyGrid}}"/>
+                  <dcont:DataGridColumnsToExportMenuItem AssociatedDataGrid="{Binding Data, Source={StaticResource ProxyGrid}}"/>
+                </ContextMenu>
+              </Setter.Value>
+            </Setter>
+          </Style>
+        </DataGrid.RowStyle>
+        <dcont:FilteringDataGrid.Columns>
+          <DataGridTextColumn Header="Data modyfikacji" Binding="{Binding ModDate, StringFormat={StaticResource LongDateFormat}}"
+                              dcont:FilterDataGridColumn.Type="Date" dcont:FilterDataGridColumn.FilterType="Date"/>
+          <DataGridTextColumn Header="Nazwa użytkownia" Binding="{Binding ModUser}"/>
+          <DataGridTextColumn Header="Nazwa komputera" Binding="{Binding ModComp}"/>
+          <DataGridTextColumn Header="Użytkownik" Binding="{Binding ModUserDisplayName}"/>
+          <DataGridTextColumn Header="Typ zmiany" Binding="{Binding ModType, Converter={cv:HistoryModificationTypeToDisplayNameConverter}}"/>
+          <DataGridTextColumn Header="Obszar" Binding="{Binding Area}"/>
+          <DataGridTextColumn Header="Modyfikowany element" Binding="{Binding Element}"/>
+          <DataGridTextColumn Header="Modyfikowana wartość" Binding="{Binding Path}"/>
+          <DataGridTextColumn Header="Poprzednia wartość" Binding="{Binding OldValue}"/>
+          <DataGridTextColumn Header="Nowa wartość" Binding="{Binding NewValue}"/>
+        </dcont:FilteringDataGrid.Columns>
+      </dcont:FilteringDataGrid>
+    </dcont:AsyncContentControl>
+    <GroupBox Grid.Row="1" Header="Data modyfikacji" HorizontalAlignment="Left" Margin="3">
+      <dcont:DateTimeRangeSelector SelectedDateTimeRange="{Binding ModifyDateTimeRange, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}">
+        <dcont:DateTimeRangeSelector.ItemsPanel>
+          <ItemsPanelTemplate>
+            <StackPanel Orientation="Horizontal"/>
+          </ItemsPanelTemplate>
+        </dcont:DateTimeRangeSelector.ItemsPanel>
+        <dcont:DateTimeRangeSelectorLastScopeItem Width="130" Margin="5" IsSelected="True" AvailableUnit="Day,Week,Month,Year" SelectedUnit="Month"/>
+        <dcont:DateTimeRangeSelectorFromBeginningItem Width="160" Margin="5" AvailableUnit="Day,Week,Month,Year" SelectedUnit="Month"/>
+        <dcont:DateTimeRangeSelectorOtherRangeItem Width="300" Margin="5"/>
+      </dcont:DateTimeRangeSelector>
+    </GroupBox>
+  </Grid>
+</dcont:AsyncUserControl>

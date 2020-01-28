@@ -1,0 +1,295 @@
+﻿<dwin:DialogWindow x:Class="WorkManager.Views.NewTaskWindowView"
+                   xmlns:dwin="clr-namespace:WPFTools.Windows;assembly=WPFTools.Presentation"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:local="clr-namespace:WorkManager.Views"
+                   xmlns:dcont="clr-namespace:WPFTools.Windows.Controls;assembly=WPFTools.Presentation"
+                   xmlns:help="clr-namespace:WPFTools.Helpers;assembly=WPFTools.Presentation"
+                   xmlns:mEx="clr-namespace:WPFTools.MarkupExtensions;assembly=WPFTools.Presentation"
+                   xmlns:dconv="clr-namespace:WPFTools.Converters;assembly=WPFTools.Presentation"
+                   xmlns:cdenum="clr-namespace:WPFTools.Enums;assembly=WPFTools.Core"
+                   mc:Ignorable="d" Height="650" Width="1000">
+  <Grid>
+    <Grid.Resources>
+      <help:BindingProxy x:Key="ProxyContext" Data="{Binding}"/>
+      <mEx:TrackingProvider x:Key="trackingProvider"
+                            TrackingGroup="{Binding Source={StaticResource ProxyContext}, Path=Data.TrackingGroup}" 
+                            TrackingObject="{Binding Source={StaticResource ProxyContext}, Path=Data.Task, UpdateSourceTrigger=PropertyChanged}"/>
+    </Grid.Resources>
+    <Grid.RowDefinitions>
+      <RowDefinition/>
+      <RowDefinition Height="auto"/>
+    </Grid.RowDefinitions>
+    <Grid Margin="3">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="auto"/>
+        <RowDefinition Height="auto"/>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+      <dcont:HeaderControl Header="Nazwa" Style="{StaticResource HeaderControlStyle4}" Margin="3">
+        <dcont:HeaderControl.HeaderStyle>
+          <Style TargetType="{x:Type ContentControl}" BasedOn="{StaticResource HeaderControlHeaderStyle4}">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding Result, Source={mEx:TrackingPropertyState PropertyName=Name, Provider={StaticResource trackingProvider}}, UpdateSourceTrigger=PropertyChanged, Converter={dconv:HasFlagConverter}, ConverterParameter={x:Static cdenum:PropertyState.Changed}}" Value="true">
+                <Setter Property="FontWeight" Value="Bold"/>
+              </DataTrigger>
+              <DataTrigger Binding="{Binding Result, Source={mEx:TrackingPropertyState PropertyName=Name, Provider={StaticResource trackingProvider}}, UpdateSourceTrigger=PropertyChanged, Converter={dconv:HasFlagConverter}, ConverterParameter={x:Static cdenum:PropertyState.NotValid}}" Value="true">
+                <Setter Property="Foreground" Value="Red"/>
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </dcont:HeaderControl.HeaderStyle>
+        <TextBox Padding="2" Text="{Binding Task.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" FontSize="16" Foreground="{StaticResource MainBrush}"/>
+      </dcont:HeaderControl>
+      <Grid Grid.Row="1">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <dcont:HeaderControl Header="Wykonawca" Style="{StaticResource HeaderControlStyle4}" Margin="3">
+          <dcont:HeaderControl.HeaderStyle>
+            <Style TargetType="{x:Type ContentControl}" BasedOn="{StaticResource HeaderControlHeaderStyle4}">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding Result, Source={mEx:TrackingPropertyState PropertyName=AccountId, Provider={StaticResource trackingProvider}}, UpdateSourceTrigger=PropertyChanged, Converter={dconv:HasFlagConverter}, ConverterParameter={x:Static cdenum:PropertyState.Changed}}" Value="true">
+                  <Setter Property="FontWeight" Value="Bold"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Result, Source={mEx:TrackingPropertyState PropertyName=AccountId, Provider={StaticResource trackingProvider}}, UpdateSourceTrigger=PropertyChanged, Converter={dconv:HasFlagConverter}, ConverterParameter={x:Static cdenum:PropertyState.NotValid}}" Value="true">
+                  <Setter Property="Foreground" Value="Red"/>
+                </DataTrigger>
+              </Style.Triggers>
+            </Style>
+          </dcont:HeaderControl.HeaderStyle>
+          <ComboBox SelectedValue="{Binding Task.AccountId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedValuePath="Id" 
+                  DisplayMemberPath="Name"
+                  ItemsSource="{Binding Accounts}"/>
+        </dcont:HeaderControl>
+        <dcont:HeaderControl Grid.Column="1" Header="Przewidywany czas rozpoczęcia" Style="{StaticResource HeaderControlStyle4}" Margin="3">
+          <dcont:HeaderControl.HeaderStyle>
+            <Style TargetType="{x:Type ContentControl}" BasedOn="{StaticResource HeaderControlHeaderStyle4}">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding Result, Source={mEx:TrackingPropertyState PropertyName=EstimateStart, Provider={StaticResource trackingProvider}}, UpdateSourceTrigger=PropertyChanged, Converter={dconv:HasFlagConverter}, ConverterParameter={x:Static cdenum:PropertyState.Changed}}" Value="true">
+                  <Setter Property="FontWeight" Value="Bold"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Result, Source={mEx:TrackingPropertyState PropertyName=EstimateStart, Provider={StaticResource trackingProvider}}, UpdateSourceTrigger=PropertyChanged, Converter={dconv:HasFlagConverter}, ConverterParameter={x:Static cdenum:PropertyState.NotValid}}" Value="true">
+                  <Setter Property="Foreground" Value="Red"/>
+                </DataTrigger>
+              </Style.Triggers>
+            </Style>
+          </dcont:HeaderControl.HeaderStyle>
+          <DatePicker SelectedDate="{Binding Task.EstimateStart, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+        </dcont:HeaderControl>
+        <dcont:HeaderControl Grid.Column="2" Header="Przewidywany czas zakończenia" Style="{StaticResource HeaderControlStyle4}" Margin="3">
+          <dcont:HeaderControl.HeaderStyle>
+            <Style TargetType="{x:Type ContentControl}" BasedOn="{StaticResource HeaderControlHeaderStyle4}">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding Result, Source={mEx:TrackingPropertyState PropertyName=EstimateEnd, Provider={StaticResource trackingProvider}}, UpdateSourceTrigger=PropertyChanged, Converter={dconv:HasFlagConverter}, ConverterParameter={x:Static cdenum:PropertyState.Changed}}" Value="true">
+                  <Setter Property="FontWeight" Value="Bold"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Result, Source={mEx:TrackingPropertyState PropertyName=EstimateEnd, Provider={StaticResource trackingProvider}}, UpdateSourceTrigger=PropertyChanged, Converter={dconv:HasFlagConverter}, ConverterParameter={x:Static cdenum:PropertyState.NotValid}}" Value="true">
+                  <Setter Property="Foreground" Value="Red"/>
+                </DataTrigger>
+              </Style.Triggers>
+            </Style>
+          </dcont:HeaderControl.HeaderStyle>
+          <DatePicker SelectedDate="{Binding Task.EstimateEnd, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+        </dcont:HeaderControl>
+      </Grid>
+      <dcont:HeaderControl Grid.Row="2" Header="Opis" Style="{StaticResource HeaderControlStyle4}" Margin="3">
+        <dcont:HeaderControl.HeaderStyle>
+          <Style TargetType="{x:Type ContentControl}" BasedOn="{StaticResource HeaderControlHeaderStyle4}">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding Result, Source={mEx:TrackingPropertyState PropertyName=Description, Provider={StaticResource trackingProvider}}, UpdateSourceTrigger=PropertyChanged, Converter={dconv:HasFlagConverter}, ConverterParameter={x:Static cdenum:PropertyState.Changed}}" Value="true">
+                <Setter Property="FontWeight" Value="Bold"/>
+              </DataTrigger>
+              <DataTrigger Binding="{Binding Result, Source={mEx:TrackingPropertyState PropertyName=Description, Provider={StaticResource trackingProvider}}, UpdateSourceTrigger=PropertyChanged, Converter={dconv:HasFlagConverter}, ConverterParameter={x:Static cdenum:PropertyState.NotValid}}" Value="true">
+                <Setter Property="Foreground" Value="Red"/>
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </dcont:HeaderControl.HeaderStyle>
+        <TextBox AcceptsReturn="True" Padding="2" Text="{Binding Task.Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalScrollBarVisibility="Auto"/>
+      </dcont:HeaderControl>
+      <GroupBox Grid.Row="4" Margin="3">
+        <GroupBox.HeaderTemplate>
+          <DataTemplate>
+            <TextBlock Text="ZASOBY" FontSize="10">
+              <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}">
+                  <Setter Property="FontWeight" Value="Normal"/>
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding Result, Source={mEx:TrackingPropertyState PropertyName=ResourceForTask, Provider={StaticResource trackingProvider}}, UpdateSourceTrigger=PropertyChanged, Converter={dconv:HasFlagConverter}, ConverterParameter={x:Static cdenum:PropertyState.Changed}}" Value="true">
+                      <Setter Property="FontWeight" Value="Bold"/>
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </TextBlock.Style>
+            </TextBlock>
+          </DataTemplate>
+        </GroupBox.HeaderTemplate>
+        <Grid DataContext="{Binding Task}">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+          </Grid.RowDefinitions>
+          <Grid Margin="5,0,5,5" >
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <ComboBox x:Name="AvailableResourcesCB" SelectedValuePath="Id" HorizontalAlignment="Stretch"
+                                          ItemsSource="{Binding AvailableResources, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name"/>
+            <Button Grid.Column="1" MinWidth="0" Padding="5" Margin="0"
+                                        Style="{StaticResource ButtonStyle2}"
+                                        Command="{Binding Data.AddResourceCommand, Source={StaticResource ProxyContext}}"
+                                        CommandParameter="{Binding SelectedItem, Source={x:Reference AvailableResourcesCB}, UpdateSourceTrigger=PropertyChanged}"
+                                        IsEnabled="{mEx:BooleanModifyPermission TSK}"
+                                        HorizontalAlignment="Center"
+                                        ToolTip="Dodaj zasób">
+              <Button.Resources>
+                <CornerRadius x:Key="ButtonStyle2.CornerRadius">0,2,2,0</CornerRadius>
+              </Button.Resources>
+              <Path Height="12" Width="12" Data="M 0,0.5 L1,0.5 M0.5,0 L0.5,1" Stretch="Fill" Stroke="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, UpdateSourceTrigger=PropertyChanged}" StrokeThickness="1"/>
+            </Button>
+          </Grid>
+          <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Background="{StaticResource SubBackgroundBrush}">
+            <ItemsControl ItemsSource="{Binding ResourceForTask, UpdateSourceTrigger=PropertyChanged}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <WrapPanel/>
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <Border BorderThickness="1" CornerRadius="1" Margin="3" Padding="1" Width="160">
+                    <Border.Resources>
+                      <help:BindingProxy x:Key="ProxyElement" Data="{Binding}"/>
+                      <mEx:TrackingProvider x:Key="trackingProvider"
+                                                  TrackingGroup="{Binding Source={StaticResource ProxyContext}, Path=Data.TrackingGroup}" 
+                                                  TrackingObject="{Binding Source={StaticResource ProxyElement}, Path=Data}"/>
+                    </Border.Resources>
+                    <Border.Style>
+                      <Style TargetType="{x:Type Border}">
+                        <Setter Property="Background" Value="{StaticResource BackgroundBrush}"/>
+                        <Setter Property="BorderBrush" Value="{StaticResource AssistantBrush}"/>
+                        <Style.Triggers>
+                          <DataTrigger Binding="{Binding TrackingState, UpdateSourceTrigger=PropertyChanged, Converter={dconv:HasFlagConverter}, ConverterParameter={x:Static cdenum:TrackingState.Added}}" Value="true">
+                            <Setter Property="BorderBrush" Value="{StaticResource HighlightBrush}"/>
+                          </DataTrigger>
+                          <DataTrigger Binding="{Binding TrackingState, UpdateSourceTrigger=PropertyChanged, Converter={dconv:HasFlagConverter}, ConverterParameter={x:Static cdenum:TrackingState.Deleted}}" Value="true">
+                            <Setter Property="Background">
+                              <Setter.Value>
+                                <SolidColorBrush Color="{StaticResource BackgroundColor}" Opacity="0.5"/>
+                              </Setter.Value>
+                            </Setter>
+                            <Setter Property="BorderBrush">
+                              <Setter.Value>
+                                <SolidColorBrush Color="{StaticResource AssistantColor}" Opacity="0.5"/>
+                              </Setter.Value>
+                            </Setter>
+                          </DataTrigger>
+                        </Style.Triggers>
+                      </Style>
+                    </Border.Style>
+                    <Grid>
+                      <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                      </Grid.RowDefinitions>
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                      </Grid.ColumnDefinitions>
+                      <TextBlock Text="{Binding Resource.Name}" VerticalAlignment="Center" TextWrapping="Wrap" Padding="3,0" FontSize="11"/>
+                      <Button Grid.Column="1" Padding="1" Width="16" Height="16" MinWidth="16" VerticalAlignment="Top"
+                                                  Command="{Binding Data.RemoveResourceCommand, Source={StaticResource ProxyContext}}" CommandParameter="{Binding}"
+                                                  IsEnabled="{mEx:BooleanModifyPermission TSK}">
+                        <Button.Resources>
+                          <CornerRadius x:Key="ButtonStyle2.CornerRadius">1</CornerRadius>
+                        </Button.Resources>
+                        <Button.Style>
+                          <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonStyle2}">
+                            <Style.Triggers>
+                              <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                  <Condition Binding="{Binding TrackingState, UpdateSourceTrigger=PropertyChanged, Converter={dconv:HasFlagConverter}, ConverterParameter={x:Static cdenum:TrackingState.Deleted}}" Value="false"/>
+                                  <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}, UpdateSourceTrigger=PropertyChanged}" Value="false"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Content">
+                                  <Setter.Value>
+                                    <Image Source="pack://application:,,,/Resources/Images/delete_32_2C3E50.png"/>
+                                  </Setter.Value>
+                                </Setter>
+                                <Setter Property="ToolTip" Value="Usuń"/>
+                              </MultiDataTrigger>
+                              <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                  <Condition Binding="{Binding TrackingState, UpdateSourceTrigger=PropertyChanged, Converter={dconv:HasFlagConverter}, ConverterParameter={x:Static cdenum:TrackingState.Deleted}}" Value="false"/>
+                                  <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}, UpdateSourceTrigger=PropertyChanged}" Value="true"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Content">
+                                  <Setter.Value>
+                                    <Image Source="pack://application:,,,/Resources/Images/delete_32_FFFFFF.png"/>
+                                  </Setter.Value>
+                                </Setter>
+                                <Setter Property="ToolTip" Value="Usuń"/>
+                              </MultiDataTrigger>
+                              <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                  <Condition Binding="{Binding TrackingState, UpdateSourceTrigger=PropertyChanged, Converter={dconv:HasFlagConverter}, ConverterParameter={x:Static cdenum:TrackingState.Deleted}}" Value="true"/>
+                                  <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}, UpdateSourceTrigger=PropertyChanged}" Value="false"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Content">
+                                  <Setter.Value>
+                                    <Image Source="pack://application:,,,/Resources/Images/restore_32_2C3E50.png"/>
+                                  </Setter.Value>
+                                </Setter>
+                                <Setter Property="ToolTip" Value="Przywróć"/>
+                              </MultiDataTrigger>
+                              <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                  <Condition Binding="{Binding TrackingState, UpdateSourceTrigger=PropertyChanged, Converter={dconv:HasFlagConverter}, ConverterParameter={x:Static cdenum:TrackingState.Deleted}}" Value="true"/>
+                                  <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}, UpdateSourceTrigger=PropertyChanged}" Value="true"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Content">
+                                  <Setter.Value>
+                                    <Image Source="pack://application:,,,/Resources/Images/restore_32_FFFFFF.png"/>
+                                  </Setter.Value>
+                                </Setter>
+                                <Setter Property="ToolTip" Value="Przywróć"/>
+                              </MultiDataTrigger>
+                            </Style.Triggers>
+                          </Style>
+                        </Button.Style>
+                      </Button>
+                      <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="3">
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="auto"/>
+                          <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Ilość" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="10" Margin="0,0,3,0"/>
+                        <dcont:DecimalBox Grid.Column="1" Padding="1" FontSize="10"
+                                                            Value="{Binding Count, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                      </Grid>
+                    </Grid>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </ScrollViewer>
+        </Grid>
+      </GroupBox>
+    </Grid>
+    <Grid Grid.Row="1" Margin="3" HorizontalAlignment="Right">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <Button Content="ANULUJ" Style="{StaticResource ButtonStyle2}" Command="{Binding CancelCommand}"/>
+      <Button Grid.Column="1" Content="ZAPISZ" Style="{StaticResource ButtonStyle1}" Command="{Binding SaveCommand}"/>
+    </Grid>
+  </Grid>
+</dwin:DialogWindow>
